@@ -1,0 +1,103 @@
+<?xml version="1.0" ?>
+<mujoco model="robot_dog">
+  <option timestep="0.001" iterations="50" solver="Newton"/>
+  <compiler angle="degree" meshdir="."/>
+
+  <asset>
+    <mesh name="torso_mesh" file="torso.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="upper_leg_mesh" file="upper_leg.stl" scale="0.001 0.001 0.001"/>
+    <mesh name="lower_leg_mesh" file="lower_leg.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+
+  <default>
+    <default class="leg">
+      <joint type="hinge" axis="0 1 0" range="-90 90" damping="0.4" limited="true"/>
+      
+    </default>
+  </default>
+
+  <worldbody>
+    <light diffuse=".6 .6 .6" pos="0 0 3" dir="0 0 -1"/>
+    <geom name="floor" type="plane" size="5 5 0.1" rgba="0.9 0.9 0.9 1"/>
+
+    <body name="torso" pos="0 0 0.02">
+      <joint type="free"/>
+      <geom type="mesh" mesh="torso_mesh" rgba="0.5 0.5 0.5 1" mass="0.5" contype="0" conaffinity="0"/>
+      <site name="torso_center" pos="0.0085 0.0055 0.2529" size="0.01"/>
+
+      <!-- Front-left -->
+      <body name="fl_upper_leg" pos="0.129 -0.081 0.260">
+        <joint name="fl_hip" class="leg" pos="0 0 0"/>
+        <geom type="mesh" mesh="upper_leg_mesh" pos="-0.129 0.081 -0.260" rgba="0.3 0.6 0.9 1" class="leg" mass="0.05" contype="0" conaffinity="0"/>
+        <body name="fl_lower_leg" pos="-0.0005 -0.015 -0.135">
+          <site name="fl_foot" pos="-0.0005 -0.025 -0.135" size="0.005"/>
+          <joint name="fl_knee" class="leg" pos="0 0 0" range="-90 0"/>
+          <geom type="mesh" mesh="lower_leg_mesh" pos="-0.1285 0.096 -0.125" rgba="0.9 0.6 0.3 1" class="leg" mass="0.03" solref="0.02 1.5" solimp="0.9 0.95 0.01"/>
+        </body>
+      </body>
+
+      <!-- Front-right -->
+      <body name="fr_upper_leg" pos="0.129 0.092 0.260">
+        <joint name="fr_hip" class="leg" pos="0 0 0"/>
+        <geom type="mesh" mesh="upper_leg_mesh" pos="-0.129 0.081 -0.260" rgba="0.3 0.6 0.9 1" class="leg" mass="0.05" contype="0" conaffinity="0"/>
+        <body name="fr_lower_leg" pos="-0.0005 -0.015 -0.135">
+          <site name="fr_foot" pos="-0.0005 -0.025 -0.135" size="0.005"/>
+          <joint name="fr_knee" class="leg" pos="0 0 0" range="-90 0"/>
+          <geom type="mesh" mesh="lower_leg_mesh" pos="-0.1285 0.096 -0.125" rgba="0.9 0.6 0.3 1" class="leg" mass="0.03" solref="0.02 1.5" solimp="0.9 0.95 0.01"/>
+        </body>
+      </body>
+
+      <!-- Rear-left -->
+      <body name="rl_upper_leg" pos="-0.112 -0.081 0.260">
+        <joint name="rl_hip" class="leg" pos="0 0 0"/>
+        <geom type="mesh" mesh="upper_leg_mesh" pos="-0.129 0.081 -0.260" rgba="0.3 0.6 0.9 1" class="leg" mass="0.05" contype="0" conaffinity="0"/>
+        <body name="rl_lower_leg" pos="-0.0005 -0.015 -0.135">
+          <site name="rl_foot" pos="-0.0005 -0.025 -0.135" size="0.005"/>
+          <joint name="rl_knee" class="leg" pos="0 0 0" range="-90 0"/>
+          <geom type="mesh" mesh="lower_leg_mesh" pos="-0.1285 0.096 -0.125" rgba="0.9 0.6 0.3 1" class="leg" mass="0.03" solref="0.02 1.5" solimp="0.9 0.95 0.01"/>
+        </body>
+      </body>
+
+      <!-- Rear-right -->
+      <body name="rr_upper_leg" pos="-0.112 0.092 0.260">
+        <joint name="rr_hip" class="leg" pos="0 0 0"/>
+        <geom type="mesh" mesh="upper_leg_mesh" pos="-0.129 0.081 -0.260" rgba="0.3 0.6 0.9 1" class="leg" mass="0.05" contype="0" conaffinity="0"/>
+        <body name="rr_lower_leg" pos="-0.0005 -0.015 -0.135">
+          <site name="rr_foot" pos="-0.0005 -0.025 -0.135" size="0.005"/>
+          <joint name="rr_knee" class="leg" pos="0 0 0" range="-90 0"/>
+          <geom type="mesh" mesh="lower_leg_mesh" pos="-0.1285 0.096 -0.125" rgba="0.9 0.6 0.3 1" class="leg" mass="0.03" solref="0.02 1.5" solimp="0.9 0.95 0.01"/>
+        </body>
+      </body>
+
+    </body>
+  </worldbody>
+
+  <sensor>
+    <accelerometer name="torso_accel" site="torso_center"/>
+    <gyro name="torso_gyro" site="torso_center"/>
+    <framelinvel name="fl_foot_vel" objtype="site" objname="fl_foot"/>
+    <framelinvel name="fr_foot_vel" objtype="site" objname="fr_foot"/>
+    <framelinvel name="rl_foot_vel" objtype="site" objname="rl_foot"/>
+    <framelinvel name="rr_foot_vel" objtype="site" objname="rr_foot"/>
+  </sensor>
+
+  <actuator>
+    <position name="fl_hip_motor" joint="fl_hip" kp="8" kv="0.3" forcerange="-1.08 1.08" ctrlrange="-1.5708 1.5708" ctrllimited="true"/>
+    <position name="fl_knee_motor" joint="fl_knee" kp="8" kv="0.3" forcerange="-1.08 1.08" ctrlrange="-1.5708 0" ctrllimited="true"/>
+    <position name="fr_hip_motor" joint="fr_hip" kp="8" kv="0.3" forcerange="-1.08 1.08" ctrlrange="-1.5708 1.5708" ctrllimited="true"/>
+    <position name="fr_knee_motor" joint="fr_knee" kp="8" kv="0.3" forcerange="-1.08 1.08" ctrlrange="-1.5708 0" ctrllimited="true"/>
+    <position name="rl_hip_motor" joint="rl_hip" kp="8" kv="0.3" forcerange="-1.08 1.08" ctrlrange="-1.5708 1.5708" ctrllimited="true"/>
+    <position name="rl_knee_motor" joint="rl_knee" kp="8" kv="0.3" forcerange="-1.08 1.08" ctrlrange="-1.5708 0" ctrllimited="true"/>
+    <position name="rr_hip_motor" joint="rr_hip" kp="8" kv="0.3" forcerange="-1.08 1.08" ctrlrange="-1.5708 1.5708" ctrllimited="true"/>
+    <position name="rr_knee_motor" joint="rr_knee" kp="8" kv="0.3" forcerange="-1.08 1.08" ctrlrange="-1.5708 0" ctrllimited="true"/>
+  </actuator>
+
+  <!-- Nominale (gehurkte) pose: heup +30 graden, knie -60 graden -> voet recht onder de heup, knie wijst naar achteren.
+       qpos = torso pos (3) + quat (4) + 8 gewrichten (rad), ctrl = dezelfde 8 gewrichtshoeken.
+       De torso start iets te hoog en zakt tijdens het settelen in reset() op zijn voeten. -->
+  <keyframe>
+    <key name="home"
+         qpos="0 0 0 1 0 0 0  0.5236 -1.0472  0.5236 -1.0472  0.5236 -1.0472  0.5236 -1.0472"
+         ctrl="0.5236 -1.0472  0.5236 -1.0472  0.5236 -1.0472  0.5236 -1.0472"/>
+  </keyframe>
+</mujoco>
