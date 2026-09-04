@@ -7,6 +7,9 @@
     <mesh name="torso_mesh" file="torso.stl" scale="0.001 0.001 0.001"/>
     <mesh name="upper_leg_mesh" file="upper_leg.stl" scale="0.001 0.001 0.001"/>
     <mesh name="lower_leg_mesh" file="lower_leg.stl" scale="0.001 0.001 0.001"/>
+    <!-- Gespiegelde versies (negatieve y-schaal) voor de poten aan de +y-kant, zodat het onderbeen ook daar aan de buitenkant zit -->
+    <mesh name="upper_leg_mesh_m" file="upper_leg.stl" scale="0.001 -0.001 0.001"/>
+    <mesh name="lower_leg_mesh_m" file="lower_leg.stl" scale="0.001 -0.001 0.001"/>
   </asset>
 
   <default>
@@ -39,11 +42,11 @@
       <!-- Front-right -->
       <body name="fr_upper_leg" pos="0.129 0.092 0.260">
         <joint name="fr_hip" class="leg" pos="0 0 0"/>
-        <geom type="mesh" mesh="upper_leg_mesh" pos="-0.129 0.081 -0.260" rgba="0.3 0.6 0.9 1" class="leg" mass="0.05" contype="0" conaffinity="0"/>
-        <body name="fr_lower_leg" pos="-0.0005 -0.015 -0.135">
-          <site name="fr_foot" pos="-0.0005 -0.025 -0.135" size="0.005"/>
+        <geom type="mesh" mesh="upper_leg_mesh_m" pos="-0.129 -0.081 -0.260" rgba="0.3 0.6 0.9 1" class="leg" mass="0.05" contype="0" conaffinity="0"/>
+        <body name="fr_lower_leg" pos="-0.0005 0.015 -0.135">
+          <site name="fr_foot" pos="-0.0005 0.025 -0.135" size="0.005"/>
           <joint name="fr_knee" class="leg" pos="0 0 0" range="-90 0"/>
-          <geom type="mesh" mesh="lower_leg_mesh" pos="-0.1285 0.096 -0.125" rgba="0.9 0.6 0.3 1" class="leg" mass="0.03" solref="0.02 1.5" solimp="0.9 0.95 0.01"/>
+          <geom type="mesh" mesh="lower_leg_mesh_m" pos="-0.1285 -0.096 -0.125" rgba="0.9 0.6 0.3 1" class="leg" mass="0.03" solref="0.02 1.5" solimp="0.9 0.95 0.01"/>
         </body>
       </body>
 
@@ -61,11 +64,11 @@
       <!-- Rear-right -->
       <body name="rr_upper_leg" pos="-0.112 0.092 0.260">
         <joint name="rr_hip" class="leg" pos="0 0 0"/>
-        <geom type="mesh" mesh="upper_leg_mesh" pos="-0.129 0.081 -0.260" rgba="0.3 0.6 0.9 1" class="leg" mass="0.05" contype="0" conaffinity="0"/>
-        <body name="rr_lower_leg" pos="-0.0005 -0.015 -0.135">
-          <site name="rr_foot" pos="-0.0005 -0.025 -0.135" size="0.005"/>
+        <geom type="mesh" mesh="upper_leg_mesh_m" pos="-0.129 -0.081 -0.260" rgba="0.3 0.6 0.9 1" class="leg" mass="0.05" contype="0" conaffinity="0"/>
+        <body name="rr_lower_leg" pos="-0.0005 0.015 -0.135">
+          <site name="rr_foot" pos="-0.0005 0.025 -0.135" size="0.005"/>
           <joint name="rr_knee" class="leg" pos="0 0 0" range="-90 0"/>
-          <geom type="mesh" mesh="lower_leg_mesh" pos="-0.1285 0.096 -0.125" rgba="0.9 0.6 0.3 1" class="leg" mass="0.03" solref="0.02 1.5" solimp="0.9 0.95 0.01"/>
+          <geom type="mesh" mesh="lower_leg_mesh_m" pos="-0.1285 -0.096 -0.125" rgba="0.9 0.6 0.3 1" class="leg" mass="0.03" solref="0.02 1.5" solimp="0.9 0.95 0.01"/>
         </body>
       </body>
 

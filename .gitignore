@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Training output (stable-baselines3 / TensorBoard)
+checkpoints/
+tb_logs/
+*.zip
+
+# MuJoCo model dumps (mj_printModel)
+MJMODEL.TXT
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

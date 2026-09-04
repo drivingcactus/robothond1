@@ -9,7 +9,8 @@ from robot_dog_env import RobotDogEnv
 
 
 def get_latest_checkpoint(folder="checkpoints"):
-    files = glob.glob(os.path.join(folder, "*.zip"))
+    # zoek ook in per-run submappen (checkpoints/run_YYYYmmdd_HHMMSS/*.zip)
+    files = glob.glob(os.path.join(folder, "**", "*.zip"), recursive=True)
     if not files:
         raise FileNotFoundError(f"Geen checkpoints gevonden in '{folder}/'. Is train.py al gestart?")
     latest = max(files, key=os.path.getmtime)
